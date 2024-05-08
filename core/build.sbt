@@ -1,1 +1,2 @@
 name := "Meerkat"
+isSnapshot := true

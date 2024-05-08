@@ -17,7 +17,7 @@ trait RdfBenchmark extends RdfMixin {
     for ((file, _, _) <- rdfs) {
       val triples             = getTriples(file)
       val (edges, nodesCount) = triplesToEdges(triples)
-      val graph               = edgesToInMemoryGraph(edges, nodesCount)
+      val graph               = edgesToGraph(edges, nodesCount)
 
       def parseAndGetRunningTime(
           grammar: AbstractCPSParsers.AbstractSymbol[L, N, _, _]) = {

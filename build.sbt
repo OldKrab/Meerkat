@@ -73,3 +73,5 @@ lazy val benchmark = (project in file("benchmark"))
 scalafmtConfig in ThisBuild := file(".scalafmt.conf")
 scalafmtOnCompile in ThisBuild := true
 scalafmtTestOnCompile in ThisBuild := true
+
+isSnapshot := true

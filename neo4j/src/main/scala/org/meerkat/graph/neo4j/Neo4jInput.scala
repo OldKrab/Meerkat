@@ -7,7 +7,8 @@ import org.neo4j.graphdb._
 import scala.collection.JavaConverters._
 import scala.language.{dynamics, implicitConversions}
 
-class Neo4jInput(db: GraphDatabaseService) extends Input[Entity, Entity] {
+class Neo4jInput(db2: GraphDatabaseService) extends Input[Entity, Entity] {
+  val db = db2.beginTx()
   private val internalIdToDbId =
     db.getAllNodes.asScala
       .map(_.getId)
@@ -47,7 +48,7 @@ class Neo4jInput(db: GraphDatabaseService) extends Input[Entity, Entity] {
 
 object Neo4jInput {
 
-  class Entity(val entity: PropertyContainer) extends Dynamic {
+  class Entity(val entity: org.neo4j.graphdb.Entity) extends Dynamic {
     def label(): String = entity match {
       case node: Node =>
         node.getLabels.asScala.head.name()
@@ -77,7 +78,7 @@ object Neo4jInput {
   }
 
   object Entity {
-    def apply(entity: PropertyContainer): Entity = new Entity(entity)
+    def apply(entity: org.neo4j.graphdb.Entity): Entity = new Entity(entity)
   }
 
   implicit def toPredicate(predicate: String => Boolean): (Entity => Boolean) =
